@@ -33,3 +33,20 @@ function removeBook(drop){
     });
     loop
 }
+
+const shelveDiv = document.getElementById('bookList');
+function bookShelve(bookItems) {
+    return `
+    <div id="individual-list">
+        <p>${bookItems.title}</p>
+        <p>${bookItems.author}</p>
+        <button type="submit">Remove</button>
+        <hr/>
+      </div>
+    `
+}
+shelveDiv.innerHTML = `
+
+${books.map(bookShelve).join('')}
+
+`;
