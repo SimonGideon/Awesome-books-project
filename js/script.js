@@ -33,6 +33,3 @@ function removeBook(drop){
     });
     loop
 }
-
-removeBook(1);
-console.log(books);
