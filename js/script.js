@@ -1,70 +1,61 @@
-// variable declaration
-const books = [
-  {
-    id: 1,
-    title: "River and the source",
-    author: "Margeret Ogola",
-  },
-  {
-    id: 2,
-    title: "The Caucasian Chalk Circle",
-    author: "Bertolt Brecht",
-  },
-];
-
-const loop = () => {
-  let look;
-  for (let i = 0; i < books.length; i++) {
-    look = books[i].a;
+class Book {
+  constructor(title, author) {
+    this.title = title;
+    this.author = author;
   }
-  removeBook(look)
-};
-
-let id = books.length + 1;
-
-// remove a book in the shelve
-function removeBook(drop) {
-  const filt = books.filter((a, i) => {
-    if (drop == a.id) {
-      books.splice(i, 1);
+}
+// variable declaration
+const books = [];
+const ids = books.length + 1;
+function displayBook() {
+  if (books.length === 0) {
+    const bookList = document.querySelector("#bookList");
+    bookList.innerHTML = "";
+  } else {
+    const shelveDiv = document.getElementById("bookList");
+    function bookShelve(bookItems) {
+      return `
+            <div id="individual-list">
+                <p>${bookItems.title}</p>
+                <p>${bookItems.author}</p>
+                <button type="submit" id="btn">Remove</button>
+                <hr/>
+              </div>
+            `;
     }
+    shelveDiv.innerHTML = `
+        
+        ${books.map(bookShelve).join("")}
+        
+        `
+  }
+}
+
+function removeBook() {
+  const btn = document.querySelectorAll("#btn");
+  btn.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      const drop = e.target.parentElement.id;
+      displayBook();
+    });
   });
 }
 
-const titled = document.getElementById("title").value;
-const authored = document.getElementById('title').value;
-const addbtn = document.getElementById('addme');
-// adding a book
-let addBook = (title, author) => {
-    books.push({
-      id:id,
-      title: `${title}`,
-      author: `${author}`,
-    });
-  };
+function addBook() {
+  const form = document.querySelector("#form");
+  const titled = document.querySelector("#title").value;
+  const authored = document.querySelector("#author").value;
+  console.log(titled);
+  books.push({ id: ids, title: titled, author: authored });
+  displayBook();
+}
 
-  addbtn.onclick = addBook(titled, authored);
-  
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  addBook();
+});
 
-  // dynamic data display
-  const shelveDiv = document.getElementById("bookList");
-  function bookShelve(bookItems) {
-    return `
-      <div id="individual-list">
-          <p>${bookItems.title}</p>
-          <p>${bookItems.author}</p>
-          <button type="submit" id="btn">Remove</button>
-          <hr/>
-        </div>
-      `;
-  }
-  shelveDiv.innerHTML = `
-  
-  ${books.map(bookShelve).join("")}
-  
-  `;
-  loop();
-  const button = document.getElementById("btn");
-  button.onclick = loop;
-
-console.log(look);
+function loop () {
+  displayBook();
+}
