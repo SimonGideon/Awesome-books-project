@@ -1,5 +1,4 @@
 // variable declaration
-const button = document.getElementById("btn");
 const books = [
   {
     id: 1,
@@ -14,9 +13,11 @@ const books = [
 ];
 
 const loop = () => {
+  let look;
   for (let i = 0; i < books.length; i++) {
-    return books[i]
+    look = books[i].a;
   }
+  removeBook(look)
 };
 
 let id = books.length + 1;
@@ -28,11 +29,10 @@ function removeBook(drop) {
       books.splice(i, 1);
     }
   });
-  loop;
 }
 
-const titled = "Chozi la heri";
-const authored = 'Asumpta Matei';
+const titled = document.getElementById("title").value;
+const authored = document.getElementById('title').value;
 const addbtn = document.getElementById('addme');
 // adding a book
 let addBook = (title, author) => {
@@ -44,6 +44,7 @@ let addBook = (title, author) => {
   };
 
   addbtn.onclick = addBook(titled, authored);
+  
 
   // dynamic data display
   const shelveDiv = document.getElementById("bookList");
@@ -62,4 +63,8 @@ let addBook = (title, author) => {
   ${books.map(bookShelve).join("")}
   
   `;
-console.log(books);
+  loop();
+  const button = document.getElementById("btn");
+  button.onclick = loop;
+
+console.log(look);
