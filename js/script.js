@@ -7,6 +7,8 @@ class Book {
 // variable declaration
 const books = [];
 const ids = books.length + 1;
+const storeObj = JSON.stringify(books)
+localStorage.setItem('data', storeObj)
 function displayBook() {
   if (books.length === 0) {
     const bookList = document.querySelector("#bookList");
@@ -32,11 +34,12 @@ function displayBook() {
 }
 
 function removeBook() {
-  const btn = document.querySelectorAll("#btn");
+  const btn = document.querySelectorAll('#btn');
   btn.forEach((button) => {
-    button.addEventListener("click", (e) => {
+    button.addEventListener('click', (e) => {
       e.preventDefault();
       const drop = e.target.parentElement.id;
+      removeBook(drop);
       displayBook();
     });
   });
