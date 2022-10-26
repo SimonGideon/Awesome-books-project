@@ -1,10 +1,10 @@
-// variables
+// variable declarations
 const addButton = document.getElementById('addme');
 const title = document.getElementById('title');
 const author = document.getElementById('author');
-const addBook = document.getElementById('bookList');
+const addBook = document.getElementById('addBook');
 
-// display a list of books after every refresh
+// hold - books on shelve after refresh
 if (localStorage.getItem('books') !== null) {
   const getbook = JSON.parse(localStorage.getItem('books'));
 
@@ -20,62 +20,49 @@ if (localStorage.getItem('books') !== null) {
   });
 }
 
-  function Book(title, author) {
-    this.title = title;
-    this.author = author;
-  }
-// variable declaration
-function displayBook() {
-  if (books.length === 0) {
-    const bookList = document.querySelector("#bookList");
-    bookList.innerHTML = "";
-  } else {
-    const shelveDiv = document.getElementById("bookList");
-    function bookShelve(bookItems) {
-      return `
-            <div id="individual-list">
-                <p>${bookItems.id}</p>
-                <p>${bookItems.title}</p>
-                <p>${bookItems.author}</p>
-                <button type="submit" id="btn">Remove</button>
-                <hr/>
-              </div>
-            `;
-    }
-    shelveDiv.innerHTML = `
-        
-        ${books.map(bookShelve).join("")}
-        
-        `;
-  }
+
+function Book(title, author) {
+  this.title = title;
+  this.author = author;
 }
 
-const remove = document.querySelectorAll("#btn");
-removeBook.forEach((item)=>{
-  item.addEventListener('click', ()=>{
-  item.parentElement.remove();
-  const bookTitle = item.name;
-  const getremove = JSON.parse(localStorage.getItem('books'));
-  const newArr = getremove.filter((object)=> object.title != bookname);
-  
-  localStorage.setItem('books', JSON.stringify(newArr));
-})
-})
-
-function addBook() {
-  const form = document.querySelector("#form");
-  const titled = document.querySelector("#title").value;
-  const authored = document.querySelector("#author").value;
-  console.log(titled);
-  books.push({ id: ids, title: titled, author: authored });
-  displayBook();
-}
-
-form.addEventListener("submit", (e) => {
+addButton.addEventListener('click', (e) => {
   e.preventDefault();
-  addBook();
+
+  addBook.innerHTML += `
+    <div>
+      <p>${title.value}</p>
+      <p>${author.value}</p>
+      <button class="remove" name="${title.value}">Remove</button>
+      <hr>
+    </div>
+  `;
+
+  const book1 = new Book(title.value, author.value);
+
+  if (localStorage.getItem('books') === null) {
+    const books = [];
+    books.push(book1);
+    localStorage.setItem('books', JSON.stringify(books));
+  } else {
+    const books = JSON.parse(localStorage.getItem('books'));
+    books.push(book1);
+    localStorage.setItem('books', JSON.stringify(books));
+  }
 });
 
-function loop() {
-  displayBook();
-}
+// remove item from shelve
+const remove = document.querySelectorAll('.remove');
+
+remove.forEach((item) => {
+  item.addEventListener('click', () => {
+    item.parentElement.remove();
+    const bookname = item.name;
+// remove from local storage
+    const getremove = JSON.parse(localStorage.getItem('books'));
+    const newArr = getremove.filter((object) => object.title !== bookname);
+    localStorage.setItem('books', JSON.stringify(newArr));
+  });
+});
+
+
