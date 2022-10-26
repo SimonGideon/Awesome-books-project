@@ -20,7 +20,6 @@ if (localStorage.getItem('books') !== null) {
   });
 }
 
-
 function Book(title, author) {
   this.title = title;
   this.author = author;
@@ -58,11 +57,9 @@ remove.forEach((item) => {
   item.addEventListener('click', () => {
     item.parentElement.remove();
     const bookname = item.name;
-// remove from local storage
+    // remove from local storage
     const getremove = JSON.parse(localStorage.getItem('books'));
     const newArr = getremove.filter((object) => object.title !== bookname);
     localStorage.setItem('books', JSON.stringify(newArr));
   });
 });
-
-
