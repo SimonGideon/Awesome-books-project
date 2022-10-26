@@ -7,8 +7,8 @@ class Book {
 // variable declaration
 const books = [];
 const ids = books.length + 1;
-const storeObj = JSON.stringify(books)
-localStorage.setItem('data', storeObj)
+const storeObj = JSON.stringify(books);
+localStorage.setItem("data", storeObj);
 function displayBook() {
   if (books.length === 0) {
     const bookList = document.querySelector("#bookList");
@@ -18,6 +18,7 @@ function displayBook() {
     function bookShelve(bookItems) {
       return `
             <div id="individual-list">
+                <p>${bookItems.id}</p>
                 <p>${bookItems.title}</p>
                 <p>${bookItems.author}</p>
                 <button type="submit" id="btn">Remove</button>
@@ -29,21 +30,21 @@ function displayBook() {
         
         ${books.map(bookShelve).join("")}
         
-        `
+        `;
   }
 }
 
-function removeBook() {
-  const btn = document.querySelectorAll('#btn');
-  btn.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      const drop = e.target.parentElement.id;
-      removeBook(drop);
-      displayBook();
-    });
-  });
-}
+const remove = document.querySelectorAll("#btn");
+removeBook.forEach((item)=>{
+  item.addEventListener('click', ()=>{
+  item.parentElement.remove();
+  const bookTitle = item.name;
+  const getremove = JSON.parse(localStorage.getItem('books'));
+  const newArr = getremove.filter((object)=> object.title != bookname);
+  
+  localStorage.setItem('books', JSON.stringify(newArr));
+})
+})
 
 function addBook() {
   const form = document.querySelector("#form");
@@ -59,6 +60,6 @@ form.addEventListener("submit", (e) => {
   addBook();
 });
 
-function loop () {
+function loop() {
   displayBook();
 }
