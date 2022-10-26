@@ -1,14 +1,30 @@
-class Book {
-  constructor(title, author) {
+// variables
+const addButton = document.getElementById('addme');
+const title = document.getElementById('title');
+const author = document.getElementById('author');
+const addBook = document.getElementById('bookList');
+
+// display a list of books after every refresh
+if (localStorage.getItem('books') !== null) {
+  const getbook = JSON.parse(localStorage.getItem('books'));
+
+  getbook.forEach((item) => {
+    addBook.innerHTML += `
+      <div>
+        <p>${item.title}</p>
+        <p>${item.author}</p>
+        <button class="remove" name="${item.title}">Remove</button>
+        <hr>
+      </div>
+    `;
+  });
+}
+
+  function Book(title, author) {
     this.title = title;
     this.author = author;
   }
-}
 // variable declaration
-const books = [];
-const ids = books.length + 1;
-const storeObj = JSON.stringify(books);
-localStorage.setItem("data", storeObj);
 function displayBook() {
   if (books.length === 0) {
     const bookList = document.querySelector("#bookList");
